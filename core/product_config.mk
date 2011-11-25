@@ -185,8 +185,7 @@ all_product_configs := $(call get-product-makefiles,\
     $(SRC_TARGET_DIR)/product/AndroidProducts.mk)
 else
   ifneq ($(XOS_BUILD),)
-    $(call import-products, device/xos/$(XOS_BUILD)/device.mk)
-    all_product_configs := device/xos/$(XOS_BUILD)/device.mk
+    all_product_configs := device/*/$(XOS_BUILD)/du.mk
   else
     # Read in all of the product definitions specified by the AndroidProducts.mk
     # files in the tree.
@@ -245,14 +244,6 @@ $(call import-products, $(current_product_makefile))
 endif  # Import all or just the current product makefile
 
 # Sanity check
-  # Read in all of the product definitions specified by the AndroidProducts.mk
-    # files in the tree.
-    #
-    #TODO: when we start allowing direct pointers to product files,
-    #    guarantee that they're in this list.
-    $(call import-products, $(get-all-product-makefiles))
-  endif
-endif # TARGET_BUILD_APPS
 $(check-all-products)
 
 ifneq ($(filter dump-products, $(MAKECMDGOALS)),)
