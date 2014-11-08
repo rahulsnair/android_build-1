@@ -117,16 +117,16 @@ class EdifyGenerator(object):
 
   def AssertDevice(self, device):
     """Assert that the device identifier is the given string."""
-    cmd = ('get_device_compatible("%s") == "OK" || '
-           'abort("This package is for \\"%s\\" devices; '
-           'this is a \\"" + getprop("ro.product.device") + "\\".");') % (
-               device, device)
+    cmd = ('assert(' +
+           ' || '.join(['getprop("ro.product.device") == "%s" || getprop("ro.build.product") == "%s"'
+                         % (i, i) for i in device.split(",")]) +
+           ');')
     self.script.append(cmd)
 
   def AssertSomeBootloader(self, *bootloaders):
     """Asert that the bootloader version is one of *bootloaders."""
     cmd = ("assert(" +
-           " ||\0".join(['getprop("ro.bootloader") == "%s"' % (b,)
+           " || ".join(['getprop("ro.bootloader") == "%s"' % (b,)
                          for b in bootloaders]) +
            ");")
     self.script.append(self.WordWrap(cmd))
@@ -134,7 +134,7 @@ class EdifyGenerator(object):
   def AssertSomeBaseband(self, *basebands):
     """Assert that the baseband version is one of *basebands."""
     cmd = ("assert(" +
-           " ||\0".join(['getprop("ro.baseband") == "%s"' % (b,)
+           " || ".join(['getprop("ro.baseband") == "%s"' % (b,)
                          for b in basebands]) +
            ");")
     self.script.append(self._WordWrap(cmd))
@@ -395,4 +395,5 @@ class EdifyGenerator(object):
     else:
       data = open(input_path, "rb").read()
     common.ZipWriteStr(output_zip, "META-INF/com/google/android/update-binary",
-                       data, perms=0o755)
+                       data, perms=0755)
+
