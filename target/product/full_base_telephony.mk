@@ -21,7 +21,7 @@
 
 PRODUCT_PROPERTY_OVERRIDES := \
     keyguard.no_require_sim=true \
-    ro.com.android.dataroaming=true
+    ro.com.android.dataroaming=false
 
 ifneq ($(TARGET_SUPPORTS_WEARABLES), true)
 PRODUCT_COPY_FILES ?=
