@@ -125,6 +125,10 @@ Usage:  ota_from_target_files [flags] input_target_files output_ota_package
   --payload_signer_args <args>
       Specify the arguments needed for payload signer.
 
+  --backup <boolean>
+      Enable or disable the execution of backuptool.sh.
+      Disabled by default.
+
   --override_device <device>
       Override device-specific asserts. Can be a comma-separated list.
 """
@@ -167,6 +171,7 @@ OPTIONS.block_based = False
 OPTIONS.updater_binary = None
 OPTIONS.oem_source = None
 OPTIONS.oem_no_mount = False
+OPTIONS.backuptool = False
 OPTIONS.fallback_to_full = True
 OPTIONS.override_device = 'auto'
 OPTIONS.full_radio = False
@@ -636,6 +641,9 @@ else if get_stage("%(bcb_dev)s") == "3/3" then
 
   device_specific.FullOTA_InstallBegin()
 
+  if OPTIONS.backuptool:
+    script.RunBackup("backup")
+
   system_progress = 0.75
 
   if OPTIONS.wipe_user_data:
@@ -708,6 +716,10 @@ else if get_stage("%(bcb_dev)s") == "3/3" then
 
   common.CheckSize(boot_img.data, "boot.img", OPTIONS.info_dict)
   common.ZipWriteStr(output_zip, "boot.img", boot_img.data)
+
+  if OPTIONS.backuptool:
+    script.ShowProgress(0.02, 10)
+    script.RunBackup("restore")
 
   script.ShowProgress(0.05, 5)
   script.WriteRawImage("/boot", "boot.img")
@@ -1958,6 +1970,8 @@ def main(argv):
       OPTIONS.payload_signer_args = shlex.split(a)
     elif o in ("--override_device"):
       OPTIONS.override_device = a
+    elif o in ("--backup"):
+      OPTIONS.backuptool = bool(a.lower() == 'true')
     else:
       return False
     return True
@@ -1989,6 +2003,7 @@ def main(argv):
                                  "log_diff=",
                                  "payload_signer=",
                                  "payload_signer_args=",
+                                 "backup=",
                                  "override_device=",
                              ], extra_option_handler=option_handler)
 
