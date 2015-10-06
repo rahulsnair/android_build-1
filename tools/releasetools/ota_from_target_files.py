@@ -92,11 +92,13 @@ Usage:  ota_from_target_files [flags] input_target_files output_ota_package
   --stash_threshold <float>
       Specifies the threshold that will be used to compute the maximum
       allowed stash size (defaults to 0.8).
-
+
   --backup <boolean>
       Enable or disable the execution of backuptool.sh.
       Disabled by default.
 
+  --override_device <device>
+      Override device-specific asserts. Can be a comma-separated list.
 """
 
 import sys
@@ -133,6 +135,7 @@ OPTIONS.no_signing = False
 OPTIONS.block_based = False
 OPTIONS.updater_binary = None
 OPTIONS.oem_source = None
+OPTIONS.backuptool = False
 OPTIONS.fallback_to_full = True
 OPTIONS.full_radio = False
 OPTIONS.full_bootloader = False
@@ -1580,6 +1583,8 @@ def main(argv):
       except ValueError:
         raise ValueError("Cannot parse value %r for option %r - expecting "
                          "a float" % (a, o))
+    elif o in ("--override_device"):
+      OPTIONS.override_device = a
     else:
       return False
     return True
@@ -1604,6 +1609,7 @@ def main(argv):
                                  "oem_settings=",
                                  "verify",
                                  "no_fallback_to_full",
+                                 "override_device=",
                                  "stash_threshold=",
                                  "backup=",
                              ], extra_option_handler=option_handler)
