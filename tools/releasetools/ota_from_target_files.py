@@ -124,6 +124,9 @@ Usage:  ota_from_target_files [flags] input_target_files output_ota_package
 
   --payload_signer_args <args>
       Specify the arguments needed for payload signer.
+
+  --override_device <device>
+      Override device-specific asserts. Can be a comma-separated list.
 """
 
 import sys
@@ -165,6 +168,7 @@ OPTIONS.updater_binary = None
 OPTIONS.oem_source = None
 OPTIONS.oem_no_mount = False
 OPTIONS.fallback_to_full = True
+OPTIONS.override_device = 'auto'
 OPTIONS.full_radio = False
 OPTIONS.full_bootloader = False
 # Stash size cannot exceed cache_size * threshold.
@@ -454,7 +458,10 @@ def SignOutput(temp_zip_name, output_zip_name):
 def AppendAssertions(script, info_dict, oem_dict=None):
   oem_props = info_dict.get("oem_fingerprint_properties")
   if oem_props is None or len(oem_props) == 0:
-    device = GetBuildProp("ro.product.device", info_dict)
+    if OPTIONS.override_device == "auto":
+      device = GetBuildProp("ro.product.device", info_dict)
+    else:
+      device = OPTIONS.override_device
     script.AssertDevice(device)
   else:
     if oem_dict is None:
@@ -1949,6 +1956,8 @@ def main(argv):
       OPTIONS.payload_signer = a
     elif o == "--payload_signer_args":
       OPTIONS.payload_signer_args = shlex.split(a)
+    elif o in ("--override_device"):
+      OPTIONS.override_device = a
     else:
       return False
     return True
@@ -1980,6 +1989,7 @@ def main(argv):
                                  "log_diff=",
                                  "payload_signer=",
                                  "payload_signer_args=",
+                                 "override_device=",
                              ], extra_option_handler=option_handler)
 
   if len(args) != 2:
