@@ -271,6 +271,7 @@ $(built_module) : $(my_prebuilt_src_file) | $(ACP) $(ZIPALIGN) $(SIGNAPK_JAR) $(
 ifneq ($(LOCAL_MODULE_PATH),$(TARGET_OUT_VENDOR)/bundled-app)
 	$(uncompress-shared-libs)
 endif
+
 ifneq ($(LOCAL_CERTIFICATE),PRESIGNED)
 	@# Only strip out files if we can re-sign the package.
 ifdef LOCAL_DEX_PREOPT
