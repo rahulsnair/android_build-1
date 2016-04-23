@@ -212,3 +212,13 @@ org\.apache\.xalan\.extensions
 org\.apache\.xalan\.processor
 org\.apache\.xalan\.transformer
 org\.apache\.xalan\.xslt
+
+
+###################################################
+# Codeaurora Misc Stuff
+# TODO: Get rid of the bloddy errors 
+
+org\.codeaurora
+org\.codeaurora\.camera
+org\.codeaurora\.ims\.qtiims
+com.\.quicinc\.tcmiface
