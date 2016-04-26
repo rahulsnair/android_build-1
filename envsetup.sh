@@ -75,7 +75,6 @@ function check_product()
     else
         XOS_BUILD=
     fi
-    export XOS_BUILD
 # ------------
 
         TARGET_PRODUCT=$1 \
