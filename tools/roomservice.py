@@ -34,9 +34,9 @@ except ImportError:
 
 # Config
 # set this to the default remote to use in repo
-default_rem = "github"
+default_rem = "XOS"
 # set this to the default revision to use (branch/tag name)
-default_rev = "android-4.3"
+default_rev = "XOS-6.0"
 # set this to the remote that you use for projects from your team repos
 # example fetch="https://github.com/halogenOS"
 default_team_rem = "XOS"
