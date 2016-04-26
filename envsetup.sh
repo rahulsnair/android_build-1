@@ -279,7 +279,7 @@ function addcompletions()
     dir="sdk/bash_completion"
     if [ -d ${dir} ]; then
         for f in `/bin/ls ${dir}/[a-z]*.bash 2> /dev/null`; do
-            echo "including $f"
+            echo -e "\e[34;1mincluding\e[0m $f"
             . $f
         done
     fi
@@ -1502,7 +1502,7 @@ fi
 for f in `test -d device && find -L device -maxdepth 4 -name 'vendorsetup.sh' 2> /dev/null | sort` \
          `test -d vendor && find -L vendor -maxdepth 4 -name 'vendorsetup.sh' 2> /dev/null | sort`
 do
-    echo "including $f"
+    echo -e "\e[34;1mincluding\e[0m $f"
     . $f
 done
 unset f
