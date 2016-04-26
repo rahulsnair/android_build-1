@@ -184,9 +184,19 @@ ifneq ($(strip $(TARGET_BUILD_APPS)),)
 all_product_configs := $(call get-product-makefiles,\
     $(SRC_TARGET_DIR)/product/AndroidProducts.mk)
 else
-# Read in all of the product definitions specified by the AndroidProducts.mk
-# files in the tree.
-all_product_configs := $(get-all-product-makefiles)
+
+  ifneq ($(XOS_BUILD),)
+
+    all_product_configs := device/*/$(XOS_BUILD)/XOS.mk
+
+  else
+
+    # Read in all of the product definitions specified by the AndroidProducts.mk
+    # files in the tree.
+      all_product_configs := $(get-all-product-makefiles)
+
+  endif # XOS_BUILD
+
 endif
 
 # Find the product config makefile for the current product.
