@@ -186,8 +186,7 @@ all_product_configs := $(call get-product-makefiles,\
 else
 
   ifneq ($(XOS_BUILD),)
-
-    all_product_configs := device/*/$(XOS_BUILD)/XOS.mk
+    all_product_configs := $(shell ls device/*/$(XOS_BUILD)/XOS.mk)
 
   else
 
@@ -199,6 +198,7 @@ else
 
 endif
 
+ifeq ($(XOS_BUILD),)
 # Find the product config makefile for the current product.
 # all_product_configs consists items like:
 # <product_name>:<path_to_the_product_makefile>
@@ -220,6 +220,10 @@ $(foreach f, $(all_product_configs),\
 _cpm_words :=
 _cpm_word1 :=
 _cpm_word2 :=
+else
+    current_product_makefile := $(strip $(all_product_configs))
+    all_product_makefiles := $(strip $(all_product_configs))
+endif
 current_product_makefile := $(strip $(current_product_makefile))
 all_product_makefiles := $(strip $(all_product_makefiles))
 
@@ -255,7 +259,6 @@ endif
 current_product_makefile :=
 all_product_makefiles :=
 all_product_configs :=
-
 
 #############################################################################
 
