@@ -641,6 +641,31 @@ else if get_stage("%(bcb_dev)s") == "3/3" then
 
   device_specific.FullOTA_InstallBegin()
 
+  script.Print("");
+
+  script.Print(" ____________________________________ ");
+  script.Print("|                                    |");
+  script.Print("|      Thanks a lot for choosing     |");
+  script.Print("|                                    |");
+  script.Print("| Y88b   d88P  .d88888b.   .d8888b.  |"); 
+  script.Print("|  Y88b d88P  d88P' 'Y88b d88P  Y88b |"); 
+  script.Print("|   Y88o88P   888     888 Y88b.      |");      
+  script.Print("|    Y888P    888     888  'Y888b.   |");   
+  script.Print("|    d888b    888     888     'Y88b. |"); 
+  script.Print("|   d88888b   888     888       '888 |"); 
+  script.Print("|  d88P Y88b  Y88b. .d88P Y88b  d88P |"); 
+  script.Print("| d88P   Y88b  'Y88888P'   'Y8888P'  |");  
+  script.Print("|                                    |");
+  script.Print("|   We believe that you'll love it!  |");
+  script.Print("|____________________________________|");
+
+  script.Print("");
+
+  CopyInstallTools(output_zip)
+  script.UnpackPackageDir("install", "/tmp/install")
+  script.SetPermissionsRecursive("/tmp/install", 0, 0, 0755, 0644, None, None)
+  script.SetPermissionsRecursive("/tmp/install/bin", 0, 0, 0755, 0755, None, None)
+
   if OPTIONS.backuptool:
     script.Mount("/system")
     script.RunBackup("backup")
