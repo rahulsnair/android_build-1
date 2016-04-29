@@ -3,6 +3,7 @@
 # Build system colors
 
 ifneq ($(BUILD_WITH_COLORS),0)
+  CL_XOS="\033[34;1m"
   CL_RED="\033[31m"
   CL_GRN="\033[32m"
   CL_YLW="\033[33m"
@@ -1748,14 +1749,52 @@ ifneq ($(TARGET_CUSTOM_RELEASETOOL),)
 	$(TARGET_CUSTOM_RELEASETOOL)
 endif
 
-XOS_TARGET_PACKAGE := $(PRODUCT_OUT)/halogenOS-$(ROM_VERSION).zip
+XOS_TARGET_PACKAGE := $(PRODUCT_OUT)/$(ROM_VERSION).zip
 
 .PHONY: otapackage bacon
 otapackage: $(INTERNAL_OTA_PACKAGE_TARGET)
 bacon: otapackage
 	$(hide) ln -f $(INTERNAL_OTA_PACKAGE_TARGET) $(XOS_TARGET_PACKAGE)
 	$(hide) $(MD5SUM) $(XOS_TARGET_PACKAGE) > $(XOS_TARGET_PACKAGE).md5sum
-	@echo -e "Package complete: $(XOS_TARGET_PACKAGE)"
+
+ @echo -e ${CL_RST}""${CL_XOS}
+ @echo -e ${CL_RST}"  hhhhhhh                               lllllll                                                                            "${CL_XOS}"     OOOOOOOOO        SSSSSSSSSSSSSSS   "${CL_XOS} 
+ @echo -e ${CL_RST}"  h:::::h                               l:::::l                                                                            "${CL_XOS}"   OO:::::::::OO    SS:::::::::::::::S  "${CL_XOS}
+ @echo -e ${CL_RST}"  h:::::h                               l:::::l                                                                            "${CL_XOS}" OO:::::::::::::OO S:::::SSSSSS::::::S  "${CL_XOS}
+ @echo -e ${CL_RST}"  h:::::h                               l:::::l                                                                            "${CL_XOS}"O:::::::OOO:::::::OS:::::S     SSSSSSS  "${CL_XOS}
+ @echo -e ${CL_RST}"   h::::h hhhhh         aaaaaaaaaaaaa    l::::l    ooooooooooo      ggggggggg   ggggg    eeeeeeeeeeee    nnnn  nnnnnnnn    "${CL_XOS}"O::::::O   O::::::OS:::::S              "${CL_XOS}
+ @echo -e ${CL_RST}"   h::::hh:::::hhh      a::::::::::::a   l::::l  oo:::::::::::oo   g:::::::::ggg::::g  ee::::::::::::ee  n:::nn::::::::nn  "${CL_XOS}"O:::::O     O:::::OS:::::S              "${CL_XOS}
+ @echo -e ${CL_RST}"   h::::::::::::::hh    aaaaaaaaa:::::a  l::::l o:::::::::::::::o g:::::::::::::::::g e::::::eeeee:::::een::::::::::::::nn "${CL_XOS}"O:::::O     O:::::O S::::SSSS           "${CL_XOS}
+ @echo -e ${CL_RST}"   h:::::::hhh::::::h            a::::a  l::::l o:::::ooooo:::::og::::::ggggg::::::gge::::::e     e:::::enn:::::::::::::::n"${CL_XOS}"O:::::O     O:::::O  SS::::::SSSSS      "${CL_XOS}
+ @echo -e ${CL_RST}"   h::::::h   h::::::h    aaaaaaa:::::a  l::::l o::::o     o::::og:::::g     g:::::g e:::::::eeeee::::::e  n:::::nnnn:::::n"${CL_XOS}"O:::::O     O:::::O    SSS::::::::SS    "${CL_XOS}
+ @echo -e ${CL_RST}"   h:::::h     h:::::h  aa::::::::::::a  l::::l o::::o     o::::og:::::g     g:::::g e:::::::::::::::::e   n::::n    n::::n"${CL_XOS}"O:::::O     O:::::O       SSSSSS::::S   "${CL_XOS}
+ @echo -e ${CL_RST}"   h:::::h     h:::::h a::::aaaa::::::a  l::::l o::::o     o::::og:::::g     g:::::g e::::::eeeeeeeeeee    n::::n    n::::n"${CL_XOS}"O:::::O     O:::::O            S:::::S  "${CL_XOS}
+ @echo -e ${CL_RST}"   h:::::h     h:::::ha::::a    a:::::a  l::::l o::::o     o::::og::::::g    g:::::g e:::::::e             n::::n    n::::n"${CL_XOS}"O::::::O   O::::::O            S:::::S  "${CL_XOS}
+ @echo -e ${CL_RST}"   h:::::h     h:::::ha::::a    a:::::a l::::::lo:::::ooooo:::::og:::::::ggggg:::::g e::::::::e            n::::n    n::::n"${CL_XOS}"O:::::::OOO:::::::OSSSSSSS     S:::::S  "${CL_XOS}
+ @echo -e ${CL_RST}"   h:::::h     h:::::ha:::::aaaa::::::a l::::::lo:::::::::::::::o g::::::::::::::::g  e::::::::eeeeeeee    n::::n    n::::n"${CL_XOS}" OO:::::::::::::OO S::::::SSSSSS:::::S  "${CL_XOS}
+ @echo -e ${CL_RST}"   h:::::h     h:::::h a::::::::::aa:::al::::::l oo:::::::::::oo   gg::::::::::::::g   ee:::::::::::::e    n::::n    n::::n"${CL_XOS}"   OO:::::::::OO   S:::::::::::::::SS   "${CL_XOS}
+ @echo -e ${CL_RST}"   hhhhhhh     hhhhhhh  aaaaaaaaaa  aaaallllllll   ooooooooooo       gggggggg::::::g     eeeeeeeeeeeeee    nnnnnn    nnnnnn"${CL_XOS}"     OOOOOOOOO      SSSSSSSSSSSSSSS     "${CL_XOS}
+ @echo -e ${CL_RST}"                                                                             g:::::g                                                                                          "${CL_RST}
+ @echo -e ${CL_RST}"                                                                 gggggg      g:::::g                                                                                          "${CL_RST}
+ @echo -e ${CL_RST}"                                                                 g:::::gg   gg:::::g                                                                                          "${CL_RST}
+ @echo -e ${CL_RST}"                                                                  g::::::ggg:::::::g                                                                                          "${CL_RST}
+ @echo -e ${CL_RST}"                                                                   gg:::::::::::::g                                                                                           "${CL_RST}
+ @echo -e ${CL_RST}"                                                                     ggg::::::ggg                                                                                             "${CL_RST}
+ @echo -e ${CL_RST}"                                                                        gggggg                                                                                                "${CL_RST}
+ @echo -e ${CL_RST}""${CL_XOS}
+ @echo -e ${CL_RST}""${CL_XOS}
+ @echo -e ${CL_RST}"                                                                                  Build made successfully!                                                                    "${CL_RST} 
+ @echo -e ${CL_RST}"                                                                                         Remember                                                                             "${CL_RST} 
+ @echo -e ${CL_RST}"                                                                                 The game has just begun B|                                                                   "${CL_RST} 
+ @echo -e ${CL_RST}"                                                                     *Inserts Rocket Spaceman (Hardwell & W&W Closing Edit)*                                                  "${CL_RST} 
+
+
+
+
+
+
+
+
 
 endif    # recovery_fstab is defined
 endif    # TARGET_NO_KERNEL != true
