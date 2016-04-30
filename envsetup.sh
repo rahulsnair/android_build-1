@@ -515,7 +515,7 @@ function breakfast()
     add_lunch_combo full-eng
     for f in `/bin/ls vendor/xos/vendorsetup.sh 2> /dev/null`
         do
-            echo "including $f"
+            echo "\033[1;34mIncluding\033[0m $f"
             . $f
         done
     unset f
@@ -1691,7 +1691,7 @@ fi
 for f in `test -d device && find -L device -maxdepth 4 -name 'vendorsetup.sh' 2> /dev/null | sort` \
          `test -d vendor && find -L vendor -maxdepth 4 -name 'vendorsetup.sh' 2> /dev/null | sort`
 do
-    echo -e "\e[34;1mincluding\e[0m $f"
+    echo -e "\e[34;1mIncluding\e[0m $f"
     . $f
 done
 unset f
