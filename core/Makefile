@@ -1769,7 +1769,9 @@ bacon: otapackage
 	$(hide) ln -f $(INTERNAL_OTA_PACKAGE_TARGET) $(XOS_TARGET_PACKAGE)
 	$(hide) $(MD5SUM) $(XOS_TARGET_PACKAGE) > $(XOS_TARGET_PACKAGE).md5sum
 	
-	@echo -e ""
+	@echo -e ${CL_XOS}" ============================================================================================================================================================================ "${CL_XOS}
+	@echo -e ${CL_XOS}" ============================================================================================================================================================================ "${CL_XOS}
+	@echo -e ${CL_RST}""${CL_XOS}
 	@echo -e ${CL_RST}"  hhhhhhh                               lllllll                                                                            "${CL_XOS}"     OOOOOOOOO        SSSSSSSSSSSSSSS   "${CL_XOS}
 	@echo -e ${CL_RST}"  h:::::h                               l:::::l                                                                            "${CL_XOS}"   OO:::::::::OO    SS:::::::::::::::S  "${CL_XOS}
 	@echo -e ${CL_RST}"  h:::::h                               l:::::l                                                                            "${CL_XOS}" OO:::::::::::::OO S:::::SSSSSS::::::S  "${CL_XOS}
@@ -1794,12 +1796,15 @@ bacon: otapackage
 	@echo -e ${CL_RST}"                                                                     ggg::::::ggg                                                                                             "${CL_RST}
 	@echo -e ${CL_RST}"                                                                        gggggg                                                                                                "${CL_RST}
 	@echo -e ${CL_RST}""${CL_XOS}
+	@echo -e ${CL_XOS}" ============================================================================================================================================================================ "${CL_XOS}
+	@echo -e ${CL_XOS}" ============================================================================================================================================================================ "${CL_XOS}
 	@echo -e ${CL_RST}""${CL_XOS}
 	@echo -e ${CL_RST}"                                                                                  Build made successfully!                                                                    "${CL_RST}
 	@echo -e ${CL_RST}"                                                                                         Remember                                                                             "${CL_RST}
 	@echo -e ${CL_RST}"                                                                                 The game has just begun B|                                                                   "${CL_RST}
 	@echo -e ${CL_RST}"                                                                     *Inserts Rocket Spaceman (Hardwell & W&W Closing Edit)*                                                  "${CL_RST}
-	@echo ""
+	@echo -e ${CL_RST}""${CL_XOS}
+	@echo -e ${CL_XOS}" ============================================================================================================================================================================ "${CL_XOS}
 
 
 
