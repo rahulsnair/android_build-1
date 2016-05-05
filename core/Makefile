@@ -1799,10 +1799,10 @@ bacon: otapackage
 	@echo -e ${CL_XOS}" ============================================================================================================================================================================ "${CL_XOS}
 	@echo -e ${CL_XOS}" ============================================================================================================================================================================ "${CL_XOS}
 	@echo -e ${CL_RST}""${CL_XOS}
-	@echo -e ${CL_RST}"                                                                                  Build made successfully!                                                                    "${CL_RST}
-	@echo -e ${CL_RST}"                                                                                         Remember                                                                             "${CL_RST}
-	@echo -e ${CL_RST}"                                                                                 The game has just begun B|                                                                   "${CL_RST}
-	@echo -e ${CL_RST}"                                                                     *Inserts Rocket Spaceman (Hardwell & W&W Closing Edit)*                                                  "${CL_RST}
+	@echo -e ${CL_RST}"                                                                     Build made successfully!                                                                                 "${CL_RST}
+	@echo -e ${CL_RST}"                                                                            Remember                                                                                          "${CL_RST}
+	@echo -e ${CL_RST}"                                                                    The game has just begun B|                                                                                "${CL_RST}
+	@echo -e ${CL_RST}"                                                        *Inserts Rocket Spaceman (Hardwell & W&W Closing Edit)*                                                               "${CL_RST}
 	@echo -e ${CL_RST}""${CL_XOS}
 	@echo -e ${CL_XOS}" ============================================================================================================================================================================ "${CL_XOS}
 
