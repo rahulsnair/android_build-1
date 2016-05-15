@@ -150,6 +150,35 @@ class EdifyGenerator(object):
       self.script.append('set_metadata("/tmp/backuptool.functions", "uid", 0, "gid", 0, "mode", 0644);')
     self.script.append(('run_program("/tmp/backuptool.sh", "%s");' % command))
 
+  def MoveAppsToData(self):
+      self.script.append('run_program("/sbin/busybox", "mkdir", "-p", "/data/app");')
+      self.script.append('run_program("/sbin/busybox", "chmod", "771", "/data/app");')
+      self.script.append('ui_print("");')
+      self.script.append('ui_print("-Camera2");')
+      self.script.append('run_program("/sbin/busybox", "rm", "-rf", "/data/app/Camera2");')
+      self.script.append('run_program("/sbin/busybox", "mv", "/system/app/Camera2", "/data/app");')
+      self.script.append('ui_print("-DeskClock");')
+      self.script.append('run_program("/sbin/busybox", "rm", "-rf", "/data/app/DeskClock");')
+      self.script.append('run_program("/sbin/busybox", "mv", "/system/app/DeskClock", "/data/app");')
+      self.script.append('ui_print("-ExactCalculator");')
+      self.script.append('run_program("/sbin/busybox", "rm", "-rf", "/data/app/ExactCalculator");')
+      self.script.append('run_program("/sbin/busybox", "mv", "/system/app/ExactCalculator", "/data/app");')
+      self.script.append('ui_print("-Gallery2");')
+      self.script.append('run_program("/sbin/busybox", "rm", "-rf", "/data/app/Gallery2");')
+      self.script.append('run_program("/sbin/busybox", "mv", "/system/app/Gallery2", "/data/app");')
+      self.script.append('ui_print("-HTMLViewer");')
+      self.script.append('run_program("/sbin/busybox", "rm", "-rf", "/data/app/HTMLViewer");')
+      self.script.append('run_program("/sbin/busybox", "mv", "/system/app/HTMLViewer", "/data/app");')
+      self.script.append('ui_print("-SoundRecorder");')
+      self.script.append('run_program("/sbin/busybox", "rm", "-rf", "/data/app/SoundRecorder");')
+      self.script.append('run_program("/sbin/busybox", "mv", "/system/app/SoundRecorder", "/data/app");')
+      self.script.append('ui_print("-Stk");')
+      self.script.append('run_program("/sbin/busybox", "rm", "-rf", "/data/app/Stk");')
+      self.script.append('run_program("/sbin/busybox", "mv", "/system/app/Stk", "/data/app");')
+      self.script.append('ui_print("-Terminal");')
+      self.script.append('run_program("/sbin/busybox", "rm", "-rf", "/data/app/Terminal");')
+      self.script.append('run_program("/sbin/busybox", "mv", "/system/app/Terminal", "/data/app");')
+
   def ShowProgress(self, frac, dur):
     """Update the progress bar, advancing it over 'frac' over the next
     'dur' seconds.  'dur' may be zero to advance it via SetProgress
