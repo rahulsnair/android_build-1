@@ -1696,4 +1696,8 @@ do
 done
 unset f
 
+# This will add all additional features of xostools.
+echo -e "\e[38;5;38;1mIncluding xostools\e[0m"
+source $(gettop)/build/tools/xostools.sh
+
 addcompletions
