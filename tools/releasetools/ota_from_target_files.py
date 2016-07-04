@@ -716,15 +716,6 @@ else if get_stage("%(bcb_dev)s") == "3/3" then
 
   script.ShowProgress(0.05, 5)
   script.WriteRawImage("/boot", "boot.img")
-  
-  if block_based:
-    script.AppendExtra("ifelse(is_mounted(\"/system\"), unmount(\"/system\"));")
-    script.Mount("/system")
-    script.AppendExtra("ifelse(is_mounted(\"/data\"), unmount(\"/data\"));")
-    script.Mount("/data")
-    script.Print("");
-    script.Print("Moving Some Applications to /data/app ")
-    script.MoveAppsToData()
 
   script.ShowProgress(0.2, 10)
   device_specific.FullOTA_InstallEnd()
@@ -1177,6 +1168,7 @@ class FileDifference(object):
       for src, tgt in self.renames.iteritems():
         print "Renaming " + src + " to " + tgt.name
         script.RenameFile(src, tgt.name)
+
 
 def WriteIncrementalOTAPackage(target_zip, source_zip, output_zip):
   target_has_recovery_patch = HasRecoveryPatch(target_zip)
