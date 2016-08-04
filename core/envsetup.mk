@@ -141,6 +141,13 @@ SDK_HOST_ARCH := x86
 # or under vendor/*/$(TARGET_DEVICE).  Search in both places, but
 # make sure only one exists.
 # Real boards should always be associated with an OEM vendor.
+
+# Make sure the target device does not have spaces
+TARGET_DEVICE := $(shell echo -en $(TARGET_DEVICE) | cut -d " " -f1)
+PRODUCT_BRAND := $(shell echo -en $(TARGET_BRAND)  | cut -d " " -f1)
+PRODUCT_DEVICE := $(TARGET_DEVICE)
+TARGET_BRAND := $(PRODUCT_BRAND)
+
 board_config_mk := \
 	$(strip $(sort $(wildcard \
 		$(SRC_TARGET_DIR)/board/$(TARGET_DEVICE)/BoardConfig.mk \
