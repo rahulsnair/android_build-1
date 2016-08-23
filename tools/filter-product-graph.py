@@ -29,8 +29,8 @@ def main():
     infos.append((m.group(1), m.group(2)))
 
   REGS = [
-      (dependency, re.compile(r'"(.*)"\s*->\s*"(.*)"')), 
-      (info, re.compile(r'"(.*)"(\s*\[.*\])')), 
+      (dependency, re.compile(r'"(.*)"\s*->\s*"(.*)"')),
+      (info, re.compile(r'"(.*)"(\s*\[.*\])')),
     ]
 
   lines = sys.stdin.readlines()

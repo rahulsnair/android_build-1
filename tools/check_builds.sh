@@ -18,7 +18,7 @@
 # Source this file into your environment.  Then:
 #
 #    $ golden_builds sdk-sdk generic-eng generic-userdebug dream-eng
-# 
+#
 # will build a set of combos.  This might take a while.  Then you can
 # go make changes, and run:
 #

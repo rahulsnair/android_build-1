@@ -6,7 +6,7 @@
 
 #
 # This script was originally made by xdevs23 (http://github.com/xdevs23)
-# 
+#
 
 
 ### DEBUG SECTION START
@@ -168,13 +168,13 @@ logd "Checking arguments"
 function build() {
     vardefine $@
     logd "Build!"
-    
-    # Display help if no argument passed    
+
+    # Display help if no argument passed
     if [ -z "$TOOL_SUBARG" ]; then
         xostools_help_build
         return 0
     fi
-    
+
     # Notify that no target device could be found
     if [   -z "$TOOL_THIRDARG" ] || \
        [ ! -z "$TARGET_DEVICE" ]; then
@@ -182,7 +182,7 @@ function build() {
     else
         # Handle the first argument
         case "$TOOL_SUBARG" in
-            
+
             full | module | mm)
                 echob "Starting build..."
                 # The default module is bacon, no matter what you specify
@@ -202,7 +202,7 @@ function build() {
                     || \
                     mmma -j$THREAD_COUNT_BUILD $BUILD_TARGET_MODULE
             ;;
-            
+
             module-list)
                 echob "Starting batch build..."
                 shift 2
@@ -216,7 +216,7 @@ function build() {
                 done
                 echob "Finished batch build"
             ;;
-            
+
             # Use 'build nothing' to test the build feature without building
             # anything
             nothing)
@@ -244,10 +244,10 @@ function build() {
                     echo -n "mmma -j$THREAD_COUNT_BUILD $BUILD_TARGET_MODULE"
                 echo -en "\n"
             ;;
-            
+
             # Oops.
             *)      echo "Unknown build command \"$TOOL_SUBARG\"."    ;;
-        
+
         esac
     fi
 }
@@ -295,7 +295,7 @@ function reposyncinternal() {
         # Oops...
         *) echo "Unknown argument \"$REPO_ARG\" for reposync ." ;;
     esac
-    
+
     # Sync!! Use the power of shell scripting!
     echo "Using $THREADS_REPO threads for sync."
     [ $TOOL_ARG == "reposynclow" ] && echo "Saving bandwidth for free!"
@@ -327,10 +327,10 @@ function reporesync() {
         # Oh yeah, we passed!
         echob "Security check passed. Continuing."
     fi
-    
+
     # Now let's handle the first argument as always
     case "$TOOL_SUBARG" in
-        
+
         # Do a full sync
         #   full:       just delete the working tree directories and sync normally
         #   full-x:     delete everything except manifest and repo tool, means
@@ -394,7 +394,7 @@ function reporesync() {
                     echo -n "--network-only" || echo -n "")
             fi
         ;;
-        
+
         *)
             TOOL_4ARG="$TOOL_THIRDARG"
             TOOL_THIRDARG="$TOOL_SUBARG"
@@ -414,14 +414,14 @@ function reporesync() {
                 reposync auto $TOOL_THIRDARG
             fi
         ;;
-        
+
         # Help me!
         "")
             xostools_help_reporesync
             cd $FRSTDIR
             return 0
         ;;
-    
+
     esac
     cd $FRSTDIR
 }
