@@ -20,7 +20,11 @@ echo "ro.build.user=$USER"
 echo "ro.build.host=`hostname`"
 echo "ro.build.tags=$BUILD_VERSION_TAGS"
 echo "ro.build.flavor=$TARGET_BUILD_FLAVOR"
-echo "ro.product.model=$PRODUCT_MODEL"
+# ro.product.model might be set before boot depending on the real device model
+# or country which the device is made for
+if [ "$TARGET_MODEL_VARIES" != "true" ]; then
+  echo "ro.product.model=$PRODUCT_MODEL"
+fi
 echo "ro.product.brand=$PRODUCT_BRAND"
 echo "ro.product.name=$PRODUCT_NAME"
 echo "ro.product.device=$TARGET_DEVICE"
