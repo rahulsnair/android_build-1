@@ -22,8 +22,11 @@ echo "ro.build.tags=$BUILD_VERSION_TAGS"
 echo "ro.build.flavor=$TARGET_BUILD_FLAVOR"
 # ro.product.model might be set before boot depending on the real device model
 # or country which the device is made for
-if [ "$TARGET_MODEL_VARIES" != "true" ]; then
+if [ "$TARGET_MODEL_VARIES" != "true" ] || [ -z "$PRODUCT_MODEL" ]; then
   echo "ro.product.model=$PRODUCT_MODEL"
+else
+  export $TARGET_MODEL_VARIES="true"
+  echo "ro.device.model_varies=1"
 fi
 echo "ro.product.brand=$PRODUCT_BRAND"
 echo "ro.product.name=$PRODUCT_NAME"
