@@ -147,7 +147,7 @@ def add_to_manifest_dependencies(repositories):
 
         print 'Adding dependency: %s -> %s' % (repo_name, repo_target)
         project = ElementTree.Element("project", attrib = { "path": repo_target,
-            "remote": "github", "name": repo_name, "revision": XOS-7.0 })
+            "remote": "github", "name": repo_name, "revision": "XOS-7.0" })
 
         if 'branch' in repository:
             project.set('revision',repository['branch'])
@@ -183,7 +183,7 @@ def add_to_manifest(repositories):
 
         print 'Adding dependency: halogenOS/%s -> %s' % (repo_name, repo_target)
         project = ElementTree.Element("project", attrib = { "path": repo_target,
-            "remote": "github", "name": "halogenOS/%s" % repo_name, "revision": XOS-7.0 })
+            "remote": "github", "name": "halogenOS/%s" % repo_name, "revision": "XOS-7.0" })
 
         if 'branch' in repository:
             project.set('revision', repository['branch'])
