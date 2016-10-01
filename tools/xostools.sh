@@ -147,6 +147,7 @@ function reposync() {
     # You have slow internet? You don't want to consume the whole bandwidth?
     # Same variable definition stuff as always
     REPO_ARG="$1"
+    PATH_ARG="$2"
     THREADS_REPO=$THREAD_COUNT_N_BUILD
     # Automatic!
     [ -z "$REPO_ARG" ] && REPO_ARG="auto"
@@ -163,10 +164,11 @@ function reposync() {
         easteregg)  THREADS_REPO=384        ;;
         # People might want to get some good help
         -h | --help | h | help | man | halp | idk )
-            echo "Usage: reposync <speed>"
+            echo "Usage: reposync <speed> [path]"
             echo "Available speeds are:"
             echo -en "  turbo\n  faster\n  fast\n  auto\n  slow\n" \
                      "  slower\n  single\n  easteregg\n\n"
+            echo "Path is not necessary. If not supplied, defaults to workspace."
             return 0
         ;;
         # Oops...
@@ -176,7 +178,7 @@ function reposync() {
     # Sync!! Use the power of shell scripting!
     echo "Using $THREADS_REPO threads for sync."
     repo sync -j$THREADS_REPO  --force-sync \
-        -c -f --no-clone-bundle --no-tags $2
+        -c -f --no-clone-bundle --no-tags $2 $PATH_ARG
 }
 
 # This is repoREsync. It REsyncs. Self-explanatory?
