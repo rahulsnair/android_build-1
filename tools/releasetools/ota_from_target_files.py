@@ -172,6 +172,8 @@ OPTIONS.full_bootloader = False
 OPTIONS.cache_size = None
 OPTIONS.stash_threshold = 0.8
 OPTIONS.backuptool = True
+OPTIONS.gen_verify = False
+OPTIONS.log_diff = None
 
 def MostPopularKey(d, default):
   """Given a dict, return the key corresponding to the largest
