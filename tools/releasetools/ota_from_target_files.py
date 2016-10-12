@@ -780,6 +780,7 @@ else if get_stage("%(bcb_dev)s") == "3/3" then
 
   if OPTIONS.backuptool:
     script.ShowProgress(0.02, 10)
+    script.Mount("/system")
     script.RunBackup("restore")
 
   if block_based:
