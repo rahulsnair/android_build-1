@@ -661,15 +661,6 @@ $(if $(PRIVATE_PROTOC_OUTPUT), \
    @cp -f $(basename $@).h $(proto_generated_path) ),)
 endef
 
-define copy-proto-files
-$(if $(PRIVATE_PROTOC_OUTPUT), \
-   $(if $(call streq,$(PRIVATE_PROTOC_INPUT),$(PRIVATE_PROTOC_OUTPUT)),, \
-   $(eval proto_generated_path := $(dir $(subst $(PRIVATE_PROTOC_INPUT),$(PRIVATE_PROTOC_OUTPUT),$@)))
-   @mkdir -p $(dir $(proto_generated_path))
-   @echo "Protobuf relocation: $@ => $(proto_generated_path)"
-   @cp -f $@ $(proto_generated_path) ),)
-endef
-
 
 # Ensure the transform-proto-to-cc rule is only defined once in multilib build.
 ifndef $(my_prefix)_$(LOCAL_MODULE_CLASS)_$(LOCAL_MODULE)_proto_defined
