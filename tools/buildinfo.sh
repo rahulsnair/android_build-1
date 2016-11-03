@@ -70,4 +70,8 @@ echo "ro.xos.device=$XOS_DEVICE"
 
 echo "ro.opa.eligible_device=true"
 
+# Remove safe media volume thingy.
+echo "audio.safemedia.force=false"
+echo "audio.safemedia.bypass=true"
+
 echo "# end build properties"
