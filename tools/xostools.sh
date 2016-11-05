@@ -271,4 +271,11 @@ function reporesync() {
     cd $FRSTDIR
 }
 
+function JACK() {
+    jack-admin stop-server
+    jack-admin cleanup-server
+    jack-admin start-server
+    jack-admin server-gc
+}
+
 return 0
