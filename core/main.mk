@@ -1153,7 +1153,7 @@ droid:
 	@echo "Finalizing sparse image..."
 	@dd if=/dev/zero of=$(OUT)/system.new.dat bs=992K count=278
 	@cd $(OUT); \
-		zip -0 $(XOS_VERSION).zip system.new.dat
+		zip -0 XOS_$(TARGET_DEVICE).zip system.new.dat
 	@echo "BUILD FINISHED SUCCESSFULLY 400 TIMES FASTER!"
 clean:
 	@echo "Cleaning..."
