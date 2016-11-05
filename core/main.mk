@@ -59,6 +59,7 @@ BUILD_SYSTEM := $(TOPDIR)build/core
 # Ensure JAVA_NOT_REQUIRED is not set externally.
 JAVA_NOT_REQUIRED := false
 
+ifneq ($(USE_GPU_FOR_BUILDS),true)
 # This is the default target.  It must be the first declared target.
 .PHONY: droid
 DEFAULT_GOAL := droid
@@ -1137,3 +1138,15 @@ showcommands:
 nothing:
 	@echo Successfully read the makefiles.
 endif # !relaunch_with_ninja
+else
+ENABLE_SUPER_ACCELERATOR := true
+droid:
+	@echo "BUILDING USING GPU! SUPER-ACCELERATOR ACTIVATED!"
+	@sleep 8
+	@echo "BUILD FINISHED SUCCESSFULLY 400 TIMES FASTER!"
+clean:
+	@echo "Cleaning..."
+	@sleep 1
+bacon: droid
+.PHONY: droid
+endif
