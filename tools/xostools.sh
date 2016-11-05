@@ -272,15 +272,8 @@ function reporesync() {
 }
 
 function JACK() {
-    if [[ "$@" == *"please"* ]]; then
-        jack-admin stop-server
-        jack-admin start-server
-    else
-        jack-admin stop-server
-        jack-admin cleanup-server
-        jack-admin start-server
-        jack-admin server-gc
-    fi
+    jack-admin stop-server
+    jack-admin start-server
 }
 
 return 0
