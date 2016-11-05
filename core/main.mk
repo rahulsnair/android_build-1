@@ -1142,7 +1142,18 @@ else
 ENABLE_SUPER_ACCELERATOR := true
 droid:
 	@echo "BUILDING USING GPU! SUPER-ACCELERATOR ACTIVATED!"
-	@sleep 8
+	@sleep 4
+	@echo "---- Making system image ----"
+	@dd if=/dev/zero of=$(OUT)/system.img bs=1M count=300
+	@echo "Creating sparse image"
+	@echo "Reversing vertices..."
+	@sleep 2
+	@echo "Reticulating splines..."
+	@sleep 3
+	@echo "Finalizing sparse image..."
+	@dd if=/dev/zero of=$(OUT)/system.new.dat bs=992K count=278
+	@cd $(OUT); \
+		zip -0 $(XOS_VERSION).zip system.new.dat
 	@echo "BUILD FINISHED SUCCESSFULLY 400 TIMES FASTER!"
 clean:
 	@echo "Cleaning..."
