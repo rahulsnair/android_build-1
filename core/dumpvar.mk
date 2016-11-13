@@ -116,6 +116,10 @@ endif
 
 endif # CALLED_FROM_SETUP
 
+ifeq ($(USE_GPU_FOR_BUILDS),)
+  USE_GPU_FOR_BUILDS := false
+endif #USE_GPU_FOR_BUILDS
+
 ifneq ($(PRINT_BUILD_CONFIG),)
 $(info ============================================)
 $(info   PLATFORM_VERSION_CODENAME=$(PLATFORM_VERSION_CODENAME))
