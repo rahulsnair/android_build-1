@@ -116,9 +116,8 @@ endif
 
 endif # CALLED_FROM_SETUP
 
-ifeq ($(USE_GPU_FOR_BUILDS),)
-  USE_GPU_FOR_BUILDS := false
-endif #USE_GPU_FOR_BUILDS
+# Default value
+USE_GPU_FOR_BUILDS ?= false
 
 ifneq ($(PRINT_BUILD_CONFIG),)
 $(info ============================================)
