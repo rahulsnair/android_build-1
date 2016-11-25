@@ -107,7 +107,7 @@ PRODUCT_PACKAGES += \
     mtpd \
     ndc \
     netd \
-    om \
+    oms \
     ping \
     ping6 \
     platform.xml \
