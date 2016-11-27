@@ -60,8 +60,11 @@ if not os.path.exists(local_manifests): os.makedirs(local_manifests)
 
 def exists_in_tree(lm, repository):
     for child in lm.getchildren():
-        if child.attrib['path'].endswith(repository):
-            return child
+        try:
+            if child.attrib['path'].endswith(repository):
+                return child
+        except:
+            pass
     return None
 
 def exists_in_tree_device(lm, repository):
@@ -130,6 +133,12 @@ def add_to_manifest_dependencies(repositories):
     except:
         lm = ElementTree.Element("manifest")
 
+    try:
+        mlm = ElementTree.parse(".repo/manifests/default.xml")
+        mlm = mlm.getroot()
+    except Exception as e:
+        mlm = ElementTree.Element("manifest")
+
     for repository in repositories:
         repo_name = repository['repository']
         repo_target = repository['target_path']
@@ -144,6 +153,13 @@ def add_to_manifest_dependencies(repositories):
                 print 'updating branch for %s to %s' % (repo_name, repository['branch'])
                 existing_project.set('revision', repository['branch'])
             continue
+        existing_m_project = exists_in_tree(mlm, repo_target)
+        if existing_m_project != None:
+            if existing_m_project.attrib['path'] == repository['target_path']:
+                print '%s already exists in main manifest, replacing with new dep' % (repo_name)
+                lm.append(ElementTree.Element("remove-project", attrib = {
+                    "name": existing_m_project.attrib['name']
+                }))
 
         print 'Adding dependency: %s -> %s' % (repo_name, repo_target)
         project = ElementTree.Element("project", attrib = { "path": repo_target,
