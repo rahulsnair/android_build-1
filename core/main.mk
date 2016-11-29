@@ -1144,6 +1144,7 @@ droid:
 	@echo "BUILDING USING GPU! SUPER-ACCELERATOR ACTIVATED!"
 	@sleep 4
 	@echo "---- Making system image ----"
+	@mkdir -p $OUT
 	@dd if=/dev/zero of=$(OUT)/system.img bs=1M count=300
 	@echo "Creating sparse image"
 	@echo "Reversing vertices..."
