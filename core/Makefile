@@ -1931,8 +1931,10 @@ bacon: otapackage
 ifneq ($(TARGET_CUSTOM_RELEASETOOL),)
 endif
 	$(hide) ln -f $(INTERNAL_OTA_PACKAGE_TARGET) $(XOS_TARGET_PACKAGE)
+	@echo -e "Generating md5sum..."
 	$(hide) $(MD5SUM) $(XOS_TARGET_PACKAGE) > $(XOS_TARGET_PACKAGE).md5sum
-
+	
+	@echo
 	@echo -e ${CL_XOS}" ============================================================================================================================================================================ "${CL_XOS}
 	@echo -e ${CL_XOS}" ============================================================================================================================================================================ "${CL_XOS}
 	@echo -e ${CL_RST}""${CL_XOS}
