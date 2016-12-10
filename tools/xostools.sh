@@ -152,6 +152,7 @@ function reposync() {
     # Same variable definition stuff as always
     REPO_ARG="$1"
     PATH_ARG="$2"
+    QUIET_ARG=""
     THREADS_REPO=$THREAD_COUNT_N_BUILD
     # Automatic!
     [ -z "$REPO_ARG" ] && REPO_ARG="auto"
@@ -166,6 +167,7 @@ function reposync() {
         slower)     THREADS_REPO=2          ;;
         single)     THREADS_REPO=1          ;;
         easteregg)  THREADS_REPO=384        ;;
+        quiet)      QUIET_ARG="-q"          ;;
         # People might want to get some good help
         -h | --help | h | help | man | halp | idk )
             echo "Usage: reposync <speed> [path]"
@@ -179,9 +181,12 @@ function reposync() {
         *) echo "Unknown argument \"$REPO_ARG\" for reposync ." ;;
     esac
 
+    if [ "$3" == "quiet" ]; then
+    QUIET_ARG="-q"
+    fi
     # Sync!! Use the power of shell scripting!
     echo "Using $THREADS_REPO threads for sync."
-    repo sync -j$THREADS_REPO  --force-sync \
+    repo sync -j$THREADS_REPO $QUIET_ARG --force-sync \
         -c -f --no-clone-bundle --no-tags $2 $PATH_ARG
     return $?
 }
