@@ -272,8 +272,8 @@ function reporesync() {
 }
 
 function JACK() {
-    jack-admin stop-server
-    jack-admin start-server
+    $(gettop)/prebuilts/sdk/tools/jack-admin stop-server
+    $(gettop)/prebuilts/sdk/tools/jack-admin start-server
 }
 
 return 0
