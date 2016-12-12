@@ -120,8 +120,8 @@ def fetch_query(remote_url, query):
         raise Exception('Gerrit URL should be in the form http[s]://hostname/ or ssh://[user@]host[:port]')
 
 if __name__ == '__main__':
-    # Default to DU's Gerrit
-    default_gerrit = 'http://gerrit.dirtyunicorns.com'
+    # Default to XOS Gerrit
+    default_gerrit = 'http://review.halogenos.org'
 
     parser = argparse.ArgumentParser(formatter_class=argparse.RawDescriptionHelpFormatter, description=textwrap.dedent('''\
         repopick.py is a utility to simplify the process of cherry picking
@@ -217,7 +217,6 @@ if __name__ == '__main__':
         revision = project.get('revision')
         if revision is None:
             revision = default_revision
-
         if not name in project_name_to_data:
             project_name_to_data[name] = {}
         project_name_to_data[name][revision] = path
