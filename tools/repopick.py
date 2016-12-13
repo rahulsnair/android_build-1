@@ -287,6 +287,10 @@ if __name__ == '__main__':
         #   - check that the project path exists
         project_path = None
 
+        # haxx : append 'halogenOS/' to all our repos. Dunno why we need it, but it fixes all shit
+        if item['branch']=="XOS-7.0":
+            item['project']="halogenOS/"+item['project']
+
         if item['project'] in project_name_to_data and item['branch'] in project_name_to_data[item['project']]:
             project_path = project_name_to_data[item['project']][item['branch']]
         elif args.path:
