@@ -20,15 +20,31 @@ import sys
 import urllib2
 import json
 import re
+import glob
 from xml.etree import ElementTree
 from urllib2 import urlopen, Request
 
 product = sys.argv[1];
+pullrem     = "halogenOS"
+pullbranch  = "XOS-7.0"
 
 if len(sys.argv) > 2:
     depsonly = sys.argv[2]
 else:
     depsonly = None
+
+# Check if there is a remote:<remote> param
+for arg in sys.argv:
+    if arg.find("remote:") != -1:
+        try:
+            pullrem     = arg.split(":", 1)[1]
+            depsonly = None
+        except: pass
+    elif arg.find("branch:") != -1:
+        try:
+            pullbranch  = arg.split(":", 1)[1]
+            depsonly = None
+        except: pass
 
 try:
     device = product[product.index("_") + 1:]
@@ -36,13 +52,13 @@ except:
     device = product
 
 if not depsonly:
-    print "Device %s not found. Attempting to retrieve device repository from XOS Github (http://github.com/halogenOS)." % device
+    print "Device %s not found. Attempting to retrieve device repository from Github (http://github.com/%s)." % (device, pullrem)
 
 repositories = []
 
 page = 1
 while not depsonly:
-    request = Request("https://api.github.com/users/halogenOS/repos?page=%d" % page)
+    request = Request("https://api.github.com/users/%s/repos?page=%d" % (pullrem, page))
     api_file = os.getenv("HOME") + '/api_token'
     if (os.path.isfile(api_file)):
         infile = open(api_file, 'r')
@@ -148,7 +164,7 @@ def add_to_manifest_dependencies(repositories):
                 print 'Updating dependency %s' % (repo_name)
                 existing_project.set('name', repository['repository'])
             if existing_project.attrib['revision'] == repository['branch']:
-                print 'halogenOS/%s already exists' % (repo_name)
+                print '%s/%s already exists' % (pullrem, repo_name)
             else:
                 print 'updating branch for %s to %s' % (repo_name, repository['branch'])
                 existing_project.set('revision', repository['branch'])
@@ -163,7 +179,7 @@ def add_to_manifest_dependencies(repositories):
 
         print 'Adding dependency: %s -> %s' % (repo_name, repo_target)
         project = ElementTree.Element("project", attrib = { "path": repo_target,
-            "remote": "github", "name": repo_name, "revision": "XOS-7.0" })
+            "remote": "github", "name": repo_name, "revision": pullbranch })
 
         if 'branch' in repository:
             project.set('revision',repository['branch'])
@@ -191,15 +207,16 @@ def add_to_manifest(repositories):
         existing_project = exists_in_tree_device(lm, repo_name)
         if existing_project != None:
             if existing_project.attrib['revision'] == repository['branch']:
-                print 'halogenOS/%s already exists' % (repo_name)
+                print '%s/%s already exists' % (pullrem, repo_name)
             else:
-                print 'updating branch for halogenOS/%s to %s' % (repo_name, repository['branch'])
+                print 'updating branch for %s/%s to %s' % (pullrem, repo_name, repository['branch'])
                 existing_project.set('revision', repository['branch'])
             continue
 
-        print 'Adding dependency: halogenOS/%s -> %s' % (repo_name, repo_target)
+        print 'Adding dependency: %s/%s -> %s' % (pullrem, repo_name, repo_target)
         project = ElementTree.Element("project", attrib = { "path": repo_target,
-            "remote": "github", "name": "halogenOS/%s" % repo_name, "revision": "XOS-7.0" })
+            "remote": "github", "name": "%s/%s" % (pullrem, repo_name),
+            "revision": pullbranch })
 
         if 'branch' in repository:
             project.set('revision', repository['branch'])
@@ -214,9 +231,9 @@ def add_to_manifest(repositories):
     f.write(raw_xml)
     f.close()
 
-def fetch_dependencies(repo_path):
+def fetch_dependencies(repo_path, depfile_prefix = "XOS"):
     print 'Looking for dependencies'
-    dependencies_path = repo_path + '/XOS.dependencies'
+    dependencies_path = repo_path + '/%s.dependencies' % depfile_prefix
     syncable_repos = []
 
     if os.path.exists(dependencies_path):
@@ -225,7 +242,20 @@ def fetch_dependencies(repo_path):
         fetch_list = []
 
         for dependency in dependencies:
-            if not is_in_manifest("%s" % dependency['repository'], "%s" % dependency['branch']):
+            try: dependency_branch_ = "%s" % dependency['branch']
+            except:
+                dependency_branch_ = pullbranch
+                pass
+            try: dependency_remote_ = "%s" % dependency['repository']
+            except:
+                dependency_remote_ = pullrem
+                pass
+            
+            if dependency_remote_.find("android_") != -1 and \
+                dependency_remote_.find("/android_") == -1:
+                    dependency_remote_ = "%s/%s" % (pullrem, dependency_remote_)
+            
+            if not is_in_manifest(dependency_remote_, dependency_branch_):
                 fetch_list.append(dependency)
                 syncable_repos.append(dependency['target_path'])
 
@@ -235,7 +265,20 @@ def fetch_dependencies(repo_path):
             print 'Adding dependencies to manifest'
             add_to_manifest_dependencies(fetch_list)
     else:
-        print 'Dependencies file not found, bailing out.'
+        try:
+            alt_path = glob.glob(repo_path + '/*.dependencies')[0]
+            print "Found alternative dependency file %s." % alt_path
+        except:
+            alt_path = None
+            pass
+        if alt_path == None:
+            print 'Dependencies file not found, bailing out.'
+        else:
+            # Get the .dependencies prefix (e.g. XOS or cm)
+            dep_prefix = \
+                alt_path[len(repo_path) + 1:-len('.dependencies')]
+            print "Found dependency prefix %s." % dep_prefix
+            fetch_dependencies(repo_path, dep_prefix)
 
     if len(syncable_repos) > 0:
         print 'Syncing dependencies'
@@ -259,7 +302,7 @@ else:
 
             repo_path = "device/%s/%s" % (manufacturer, device)
 
-            add_to_manifest([{'repository':repo_name,'target_path':repo_path,'branch':'XOS-7.0'}])
+            add_to_manifest([{'repository':repo_name,'target_path':repo_path,'branch':pullbranch}])
 
             print "Syncing repository to retrieve project."
             os.system('repo sync --force-sync %s' % repo_path)
@@ -269,4 +312,4 @@ else:
             print "Done"
             sys.exit()
 
-print "Repository for %s not found in the XOS Github repository list. If this is in error, you may need to manually add it to .repo/local_manifests/XOS_manifest.xml" % device
+print "Repository for %s not found in the %s Github repository list. If this is in error, you may need to manually add it to .repo/local_manifests/XOS_manifest.xml" % (device, pullrem)
