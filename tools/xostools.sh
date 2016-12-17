@@ -223,10 +223,12 @@ function reporesync() {
             echoe \
                 "WARNING: This process will delete \033[1myour whole source tree!\033[0m"
             # Ask if the girl or guy really wants to continue.
+            if [ "$2" != "confident" ]; then
             read -p "Do you want to continue? [y\N] : " \
                  -n 1 -r
             # Check the reply.
             [[ ! $REPLY =~ ^[Yy]$ ]] && echoe "\nAborted." && return 1
+            fi
             # Print some lines of words
             echob "Full source tree resync will start now."
             # Just in case...
