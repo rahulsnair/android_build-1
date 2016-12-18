@@ -1802,7 +1802,7 @@ function get_make_command()
 function make()
 {
     # Make sure that jack is working
-    JACK > /dev/null
+    JACK 2>&1 >/dev/null
     local start_time=$(date +"%s")
     $(get_make_command) "$@"
     local ret=$?
