@@ -602,6 +602,7 @@ function brunch()
 function breakfast()
 {
     target=$1
+    XOS_DEVICES_ONLY="true"
     unset LUNCH_MENU_CHOICES
     add_lunch_combo full-eng
     for f in `/bin/ls vendor/xos/vendorsetup.sh 2> /dev/null`
@@ -611,14 +612,6 @@ function breakfast()
         done
     unset f
 
-    local additional_roomservice_args
-
-    for arg in $@; do
-        if [[ "$arg" == "remote:"* ]] || [[ "$arg" == "branch:"* ]]; then
-            additional_roomservice_args="$additional_roomservice_args $arg"
-        fi
-    done
-
     if [ $# -eq 0 ]; then
         # No arguments, so let's have the full menu
         lunch
@@ -626,10 +619,10 @@ function breakfast()
         echo "z$target" | grep -q "-"
         if [ $? -eq 0 ]; then
             # A buildtype was specified, assume a full device name
-            lunch $target $additional_roomservice_args
+            lunch $target
         else
             # This is probably just the XOS model name
-            lunch XOS_$target-userdebug $additional_roomservice_args
+            lunch XOS_$target-userdebug
         fi
     fi
     return $?
@@ -640,13 +633,6 @@ alias bib=breakfast
 function lunch()
 {
     local answer
-    local additional_roomservice_args
-
-    for arg in $@; do
-        if [[ "$arg" == "remote:"* ]] || [[ "$arg" == "branch:"* ]]; then
-            additional_roomservice_args="$additional_roomservice_args $arg"
-        fi
-    done
 
     if [ "$1" ] ; then
         answer=$1
@@ -688,13 +674,13 @@ function lunch()
         # if we can't find the product, try to grab it from our github
         T=$(gettop)
         pushd $T > /dev/null
-        build/tools/roomservice.py $product $additional_roomservice_args
+        build/tools/roomservice.py $product
         popd > /dev/null
         check_product $product
     else
         T=$(gettop)
         pushd $T > /dev/null
-        build/tools/roomservice.py $product true $additional_roomservice_args
+        build/tools/roomservice.py $product true
         popd > /dev/null
     fi
     if [ $? -ne 0 ]
