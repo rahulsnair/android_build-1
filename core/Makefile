@@ -1937,9 +1937,15 @@ $(INTERNAL_OTA_PACKAGE_TARGET): $(BUILT_TARGET_FILES_PACKAGE) $(DISTTOOLS)
 
 XOS_TARGET_PACKAGE := $(PRODUCT_OUT)/$(XOS_VERSION).zip
 
-.PHONY: otapackage bacon
 otapackage: $(INTERNAL_OTA_PACKAGE_TARGET)
+ifeq ($(TARGET_WANTS_DTIMAGE_BUILT),true)
+.PHONY: dtimage | otapackage bacon
+bacon: dtimage | otapackage
+else
+.PHONY: otapackage bacon
 bacon: otapackage
+endif
+
 ifneq ($(TARGET_CUSTOM_RELEASETOOL),)
 endif
 	$(hide) ln -f $(INTERNAL_OTA_PACKAGE_TARGET) $(XOS_TARGET_PACKAGE)
