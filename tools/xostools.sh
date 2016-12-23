@@ -90,7 +90,7 @@ function build() {
     module="${module// /}"
     cleanarg="${cleanarg/$module/}"
     cleanarg="${cleanarg// /}"
-    
+
     # Display help if no argument passed
     if [ -z "$buildarg" ]; then
         xostools_help_build
@@ -281,6 +281,10 @@ function reporesync() {
 
     esac
     cd $FRSTDIR
+}
+
+function reporeset() {
+  repo forall -c '[ "$(git remote | grep XOS)" != "XOS" ] || git reset --hard XOS/XOS-7.0'
 }
 
 function JACK() {
