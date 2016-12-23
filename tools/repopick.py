@@ -206,7 +206,10 @@ if __name__ == '__main__':
     manifest = subprocess.check_output(['repo', 'manifest'])
     xml_root = ElementTree.fromstring(manifest)
     projects = xml_root.findall('project')
-    default_revision = xml_root.findall('default')[0].get('revision').split('/')[-1]
+    remotes= xml_root.findall('remote')
+    for i in remotes:
+      if i.get('name') == "XOS" :
+        default_revision=i.get('revision').split('/')[-1]
 
     #dump project data into the a list of dicts with the following data:
     #{project: {path, revision}}
