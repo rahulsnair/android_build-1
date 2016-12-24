@@ -71,7 +71,9 @@ endef
 
 $(combo_2nd_arch_prefix)TARGET_NO_UNDEFINED_LDFLAGS := -Wl,--no-undefined
 
-TARGET_mips_CFLAGS :=	-O2 \
+TARGET_OPTIMIZATION_LEVEL ?= 2
+
+TARGET_mips_CFLAGS :=	-O$(TARGET_OPTIMIZATION_LEVEL) \
 			-fomit-frame-pointer \
 			-fno-strict-aliasing    \
 			-funswitch-loops
