@@ -287,6 +287,13 @@ function reporeset() {
   repo forall -c '[ "$(git remote | grep XOS)" != "XOS" ] || git reset --hard XOS/XOS-7.0'
 }
 
+function resetmanifest() {
+  cd $(gettop)/.repo/manifests
+  git fetch origin XOS-7.0 2>&1 >/dev/null
+  git reset --hard origin/XOS-7.0 2>&1 >/dev/null
+  cd $(gettop)
+}
+
 function JACK() {
     $(gettop)/prebuilts/sdk/tools/jack-admin stop-server  2>&1 >/dev/null
     $(gettop)/prebuilts/sdk/tools/jack-admin start-server 2>&1 >/dev/null
