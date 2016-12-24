@@ -124,11 +124,13 @@ TARGET_GLOBAL_LDFLAGS += \
 TARGET_GLOBAL_LDFLAGS += -Wl,--allow-shlib-undefined
 
 TARGET_GLOBAL_CPPFLAGS += -fvisibility-inlines-hidden
+TARGET_OPTIMIZATION_LEVEL ?= 2
 
 # More flags/options can be added here
 TARGET_RELEASE_CFLAGS := \
 			-DNDEBUG \
-			-O2 -g \
+			-O$(TARGET_OPTIMIZATION_LEVEL) \
+			-g \
 			-Wstrict-aliasing=2 \
 			-fgcse-after-reload \
 			-frerun-cse-after-loop \

@@ -1400,7 +1400,11 @@ my_ldflags := $(call $(LOCAL_2ND_ARCH_VAR_PREFIX)convert-to-$(my_host)clang-flag
 endif
 
 ifeq ($(my_fdo_build), true)
-  my_cflags := $(patsubst -Os,-O2,$(my_cflags))
+	preferred_opt_level := 2
+	ifneq ($(TARGET_OPTIMIZATION_LEVEL),)
+		preferred_opt_level := $(TARGET_OPTIMIZATION_LEVEL)
+	endif
+  my_cflags := $(patsubst -Os,-O$(preferred_opt_level),$(my_cflags))
   fdo_incompatible_flags := -fno-early-inlining -finline-limit=%
   my_cflags := $(filter-out $(fdo_incompatible_flags),$(my_cflags))
 endif
