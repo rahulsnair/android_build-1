@@ -1393,6 +1393,9 @@ class BlockDifference(object):
 
   def WriteScript(self, script, output_zip, progress=None):
     if not self.src:
+      if os.getenv('TARGET_WANTS_VOLTE', 'false') == 'true':
+        print "VoLTE support activated."
+        script.Print("YOU NOT GONNA GET VoLTE, CHUTIYA")
       # write the output unconditionally
       script.Print(" ")
       script.Print("Flashing halogenOS System files...")
