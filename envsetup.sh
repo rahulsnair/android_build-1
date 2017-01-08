@@ -176,6 +176,8 @@ function check_product()
        XOS_BUILD=
     fi
     export XOS_BUILD
+    export XOS_VERSION=$(get_build_var XOS_VERSION)
+
 
         TARGET_PRODUCT=$1 \
         TARGET_BUILD_VARIANT= \
