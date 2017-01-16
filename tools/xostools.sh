@@ -284,7 +284,7 @@ function reporesync() {
 }
 
 function reporeset() {
-  repo forall -c '[ "$(git remote | grep XOS)" != "XOS" ] || git reset --hard XOS/XOS-7.0'
+  repo forall -c 'git reset --hard XOS/XOS-7.0 2>/dev/null'
 }
 
 function resetmanifest() {
