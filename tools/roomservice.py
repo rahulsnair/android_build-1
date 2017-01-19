@@ -14,17 +14,29 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import json
 import os
 import os.path
-import sys
-import urllib2
-import json
 import re
+import subprocess
+import sys
 from xml.etree import ElementTree
-from urllib2 import urlopen, Request
 
-product = sys.argv[1];
+try:
+    # For python3
+    import urllib.error
+    import urllib.request
+except ImportError:
+    # For python2
+    import imp
+    import urllib2
 
+    urllib = imp.new_module('urllib')
+    urllib.error = urllib2
+    urllib.request = urllib2
+
+product = sys.argv[1]
+api_url = "https://api.github.com/users/halogenOS/repos?page=%d"
 if len(sys.argv) > 2:
     depsonly = sys.argv[2]
 else:
@@ -42,7 +54,7 @@ repositories = []
 
 page = 1
 while not depsonly:
-    request = Request("https://api.github.com/users/halogenOS/repos?page=%d" % page)
+    request = urllib.request.Request(api_url % page)
     api_file = os.getenv("HOME") + '/api_token'
     if (os.path.isfile(api_file)):
         infile = open(api_file, 'r')
@@ -209,7 +221,7 @@ def add_to_manifest(repositories):
         project = ElementTree.Element("project", attrib={"path": repo_target,
                                                          "remote": remote, "name": "%s" % repo_name,
                                                          "revision": branch})
-                                                         
+
         lm.append(project)
 
     indent(lm, 0)
@@ -245,7 +257,8 @@ def fetch_dependencies(repo_path):
 
     if len(syncable_repos) > 0:
         print 'Syncing dependencies'
-        os.system('repo sync --force-sync %s' % ' '.join(syncable_repos))
+        for repo in syncable_repos:
+            subprocess.call(['repo', 'sync', '--force-sync', repo])
 
 if depsonly:
     repo_path = get_from_manifest(device)
@@ -268,7 +281,7 @@ else:
             add_to_manifest([{'repository':repo_name,'target_path':repo_path,'branch':'XOS-7.0'}])
 
             print "Syncing repository to retrieve project."
-            os.system('repo sync --force-sync %s' % repo_path)
+            subprocess.call(['repo', 'sync', '--force-sync', repo_path])
             print "Repository synced!"
 
             fetch_dependencies(repo_path)
