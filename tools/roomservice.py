@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # Copyright (C) 2012 The CyanogenMod Project
 # Copyright (C) 2012/2013 SlimRoms Project
-#
+# Copyright (C) 2017 The halogenOS Project
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
@@ -188,22 +188,28 @@ def add_to_manifest(repositories):
     for repository in repositories:
         repo_name = repository['repository']
         repo_target = repository['target_path']
+        try:
+            branch = repository['branch']
+        except KeyError:
+            branch = 'XOS-7.0'
+        try:
+            remote = repository['remote']
+        except KeyError:
+            remote = 'XOS'
         existing_project = exists_in_tree_device(lm, repo_name)
-        if existing_project != None:
-            if existing_project.attrib['revision'] == repository['branch']:
-                print 'halogenOS/%s already exists' % (repo_name)
+        if existing_project is not None:
+            if existing_project.attrib['revision'] == branch:
+                print '%s already exists' % repo_name
             else:
-                print 'updating branch for halogenOS/%s to %s' % (repo_name, repository['branch'])
-                existing_project.set('revision', repository['branch'])
+                print 'updating branch for %s to %s' % (repo_name, branch)
+                existing_project.set('revision', branch)
             continue
 
-        print 'Adding dependency: halogenOS/%s -> %s' % (repo_name, repo_target)
-        project = ElementTree.Element("project", attrib = { "path": repo_target,
-            "remote": "XOS", "name": "%s" % repo_name, "revision": "XOS-7.0" })
-
-        if 'branch' in repository:
-            project.set('revision', repository['branch'])
-
+        print 'Adding dependency: %s -> %s' % (repo_name, repo_target)
+        project = ElementTree.Element("project", attrib={"path": repo_target,
+                                                         "remote": remote, "name": "%s" % repo_name,
+                                                         "revision": branch})
+                                                         
         lm.append(project)
 
     indent(lm, 0)
