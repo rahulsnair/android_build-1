@@ -284,13 +284,13 @@ function reporesync() {
 }
 
 function reporeset() {
-  repo forall -c 'git reset --hard XOS/XOS-7.0 2>/dev/null'
+  repo forall -c 'git reset --hard XOS/XOS-7.1 2>/dev/null'
 }
 
 function resetmanifest() {
   cd $(gettop)/.repo/manifests
-  git fetch origin XOS-7.0 2>&1 >/dev/null
-  git reset --hard origin/XOS-7.0 2>&1 >/dev/null
+  git fetch origin XOS-7.1 2>&1 >/dev/null
+  git reset --hard origin/XOS-7.1 2>&1 >/dev/null
   cd $(gettop)
 }
 
