@@ -175,7 +175,7 @@ def add_to_manifest_dependencies(repositories):
 
         print 'Adding dependency: %s -> %s' % (repo_name, repo_target)
         project = ElementTree.Element("project", attrib = { "path": repo_target,
-            "remote": "XOS", "name": repo_name, "revision": "XOS-7.0" })
+            "remote": "XOS", "name": repo_name, "revision": "XOS-7.1" })
 
         if 'branch' in repository:
             project.set('revision',repository['branch'])
@@ -203,7 +203,7 @@ def add_to_manifest(repositories):
         try:
             branch = repository['branch']
         except KeyError:
-            branch = 'XOS-7.0'
+            branch = 'XOS-7.1'
         try:
             remote = repository['remote']
         except KeyError:
@@ -278,7 +278,7 @@ else:
 
             repo_path = "device/%s/%s" % (manufacturer, device)
 
-            add_to_manifest([{'repository':repo_name,'target_path':repo_path,'branch':'XOS-7.0'}])
+            add_to_manifest([{'repository':repo_name,'target_path':repo_path,'branch':'XOS-7.1'}])
 
             print "Syncing repository to retrieve project."
             subprocess.call(['repo', 'sync', '--force-sync', repo_path])
