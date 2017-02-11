@@ -22,7 +22,6 @@ PRODUCT_PACKAGES := \
     BluetoothMidiService \
     Camera2 \
     Gallery2 \
-    Music \
     MusicFX \
     OneTimeInitializer \
     Provision \
@@ -52,7 +51,7 @@ PRODUCT_PACKAGES += \
     power.default
 
 PRODUCT_COPY_FILES := \
-        frameworks/av/media/libeffects/data/audio_effects.conf:system/etc/audio_effects.conf
+    frameworks/av/media/libeffects/data/audio_effects.conf:system/etc/audio_effects.conf
 
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.carrier=unknown
