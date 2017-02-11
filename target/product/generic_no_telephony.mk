@@ -26,7 +26,6 @@ PRODUCT_PACKAGES := \
     Provision \
     SystemUI \
     EasterEgg \
-    Gallery2 \
     WallpaperCropper
 
 PRODUCT_PACKAGES += \
