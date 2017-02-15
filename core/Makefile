@@ -2059,6 +2059,14 @@ XOS_TARGET_PACKAGE := $(PRODUCT_OUT)/$(XOS_VERSION).zip
 
 otapackage: $(INTERNAL_OTA_PACKAGE_TARGET)
 ifeq ($(TARGET_WANTS_DTIMAGE_BUILT),true)
+ifeq ($(TARGET_HAS_NO_CLUE_WHERE_DTBTOOL_IS),ofc)
+# Dirty haxx
+dtimageHX:
+	mkdir -p $(HOST_OUT)/bin/
+	cp build/tools/dtbToolCM $(HOST_OUT)/bin/dtbTool
+dtimage: dtimageHX
+$(HOST_OUT)/bin/dtbTool: dtimageHX
+endif
 .PHONY: dtimage | otapackage bacon
 bacon: dtimage | otapackage
 else
