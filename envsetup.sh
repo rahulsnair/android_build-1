@@ -634,8 +634,8 @@ alias bib=breakfast
 
 function lunch()
 {
+    show_lunch_prettyprint
     local answer
-
     if [ "$1" ] ; then
         answer=$1
     else
@@ -1881,6 +1881,21 @@ do
     . $f
 done
 unset f
+
+function show_lunch_prettyprint() {
+  echo -e "$CL_XOSBOLD" '$$\' "$CL_RESET"
+  echo -e "$CL_XOSBOLD" '$$ |                $$\                                          $$$$$$\   $$$$$$\  ' "$CL_RESET"
+  echo -e "$CL_XOSBOLD" '$$ |                $$ |                                        $$  __$$\ $$  __$$\ ' "$CL_RESET"
+  echo -e "$CL_XOSBOLD" '$$$$$$$\   $$$$$$\  $$ | $$$$$$\   $$$$$$\   $$$$$$\  $$$$$$$\  $$ /  $$ |$$ /  \__|' "$CL_RESET"
+  echo -e "$CL_XOSBOLD" '$$  __$$\  \____$$\ $$ |$$  __$$\ $$  __$$\ $$  __$$\ $$  __$$\ $$ |  $$ |\$$$$$$\  ' "$CL_RESET"
+  echo -e "$CL_XOSBOLD" '$$ |  $$ | $$$$$$$ |$$ |$$ /  $$ |$$ /  $$ |$$$$$$$$ |$$ |  $$ |$$ |  $$ | \____$$\ ' "$CL_RESET"
+  echo -e "$CL_XOSBOLD" '$$ |  $$ |$$  __$$ |$$ |$$ |  $$ |$$ |  $$ |$$   ____|$$ |  $$ |$$ |  $$ |$$\   $$ |' "$CL_RESET"
+  echo -e "$CL_XOSBOLD" '$$ |  $$ |\$$$$$$$ |$$ |\$$$$$$  |\$$$$$$$ |\$$$$$$$\ $$ |  $$ | $$$$$$  |\$$$$$$  |' "$CL_RESET"
+  echo -e "$CL_XOSBOLD" '\__|  \__| \_______|\__| \______/  \____$$ | \_______|\__|  \__| \______/  \______/ ' "$CL_RESET"
+  echo -e "$CL_XOSBOLD" '                                  $$\   $$ |                                        ' "$CL_RESET"
+  echo -e "$CL_XOSBOLD" '                                  \$$$$$$  |                                        ' "$CL_RESET"
+  echo -e "$CL_XOSBOLD" '                                   \______/                                         ' "$CL_RESET"
+}
 
 addcompletions
 addxostools
