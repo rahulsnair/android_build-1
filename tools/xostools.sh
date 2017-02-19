@@ -74,11 +74,10 @@ fi
 
 # Handle the kitchen and automatically eat lunch if hungry
 function lunchauto() {
-    device="$1" 
     echo "Eating breakfast..."
-    breakfast $device
+    breakfast $@
     echo "Lunching..."
-    lunch $device
+    lunch $@
 }
 
 # Build function
