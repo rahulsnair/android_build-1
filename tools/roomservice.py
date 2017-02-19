@@ -154,6 +154,16 @@ def add_to_manifest_dependencies(repositories):
     for repository in repositories:
         repo_name = repository['repository']
         repo_target = repository['target_path']
+        try:
+            repo_remote = repository['remote']
+        except:
+            repo_remote = "XOS"
+            pass
+        try:
+            repo_revision = repository['branch']
+        except:
+            repo_revision = "XOS-7.1"
+            pass
         existing_project = exists_in_tree(lm, repo_target)
         if existing_project != None:
             if existing_project.attrib['name'] != repository['repository']:
@@ -175,7 +185,7 @@ def add_to_manifest_dependencies(repositories):
 
         print 'Adding dependency: %s -> %s' % (repo_name, repo_target)
         project = ElementTree.Element("project", attrib = { "path": repo_target,
-            "remote": "XOS", "name": repo_name, "revision": "XOS-7.1" })
+            "remote": repo_remote, "name": repo_name, "revision": repo_revision })
 
         if 'branch' in repository:
             project.set('revision',repository['branch'])
